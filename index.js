@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // grab elements
     const cardContainer = document.querySelector('.middle')
     const form = document.querySelector('form')
-    const list = document.querySelector('.recipe-list')
-
+    const list = document.querySelector('.list-container')
+ console.log(list)
 
     // helper functions
 
@@ -26,9 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cardContainer.appendChild(cardDiv)
         cardDiv.lastChild.addEventListener('click', (e) => {
             const ul = document.createElement('ul')
+            ul.classList = 'recipe-list'
             Object.keys(item).filter((value) => {
                 if(value.includes('strIngredient') && item[value] !== null){
                     const recipe = document.createElement('li')
+                    recipe.classList = 'recipe'
                     recipe.textContent = item[value]
                     ul.appendChild(recipe)
                 }
