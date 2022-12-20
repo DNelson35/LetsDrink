@@ -1,45 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // grab elements
     const cardContainer = document.querySelector('.middle')
     const form = document.querySelector('form')
+    const list = document.querySelector('.recipe-list')
+
+
+    // helper functions
+
+    function buildCardHtml(card,item){
+        card.classList = 'card'
+        card.innerHTML = `  <img src=${item.strDrinkThumb} alt="Drink-Image" style="width:100%">
+          <h4><b>${item.strDrink}</b></h4>
+          <ul class="ing-list">
+          <li><b>Glass:</b> ${item.strGlass}</li>
+          <li><b>Category:</b> ${item.strCategory}</li>
+          <li><b>ID:</b> ${item.idDrink}</li>
+          </ul>
+          <button class="addBtn">+</button>`
+    }
 
     function createCard(item){
         const cardDiv = document.createElement('div')
-        const cardName = document.createElement('p')
-        const cardImg = document.createElement('img')
-        cardDiv.classList = 'card'
-        cardName.textContent = `${item.strDrink}`
-        cardImg.src = item.strDrinkThumb
-        cardImg.loading = 'lazy'
+        buildCardHtml(cardDiv, item)
         cardContainer.appendChild(cardDiv)
-        cardDiv.appendChild(cardImg)
-        cardDiv.appendChild(cardName)
+        cardDiv.lastChild.addEventListener('click', (e) => {
+            const ul = document.createElement('ul')
+            Object.keys(item).filter((value) => {
+                if(value.includes('strIngredient') && item[value] !== null){
+                    const recipe = document.createElement('li')
+                    recipe.textContent = item[value]
+                    ul.appendChild(recipe)
+                }
+                list.appendChild(ul)
+            })
+        })
     }
     
     function findCard(data,input){
         data.drinks.filter((item) => {
-            if(input.toLowerCase() === item.strDrink.toLowerCase()){
+            if(input.toUpperCase() === item.strDrink.toUpperCase()){
                 createCard(item)
             }
         })
     }
 
+    function uppercaseFirstLetters(e, index){
+        const inputArr = e.target[`${index}`].value.split(' ')
+        return inputArr.map(el => {
+            return el.charAt(0).toUpperCase() + el.slice(1)
+        }).join(' ')
+    }
+
+    // build fetch
+    function fetchByName(name){
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
+        .then(resp => resp.json())
+        .then(resp => findCard(resp,name))
+        .catch((error) => console.log(error.message))
+    }
+
+    // call fetch request
     form.addEventListener('submit', (e) => 
     {
         e.preventDefault()
-        const inputArr = e.target[0].value.split(' ')
-        const input = inputArr.map(el => {
-            return el.charAt(0).toUpperCase() + el.slice(1)
-        }).join(' ')
-        
-        console.log(input)
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${input}`)
-        .then(resp => resp.json())
-        .then(resp => findCard(resp,input))
+        const input = uppercaseFirstLetters(e, 0)
+        fetchByName(input)
 
         form.reset()
         
     })
+
     
     
     
