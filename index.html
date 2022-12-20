@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's Drink</title>
     <link rel="stylesheet" href="styles.css"/>
+    <script src="index.js"></script>
 </head>
 <body>
     <header>
@@ -14,15 +15,13 @@
         </nav>
     </header>
     <section class="top">
-        <form action="submit">
-            <input type="text" class="form-input" placeholder="Old Fashion"/>
-            <button class="input-btn">🔍</button>
+        <form id="form">
+            <input type="text" id="form-input" placeholder="Old Fashion">
+            <input type='submit' id="input-btn" value="🔍"/>
         </form>
     </section>
     <section class="middle">
-        <div class="card"></div>
-        <div class="card"></div>
-        <div class="card"></div>
+        <!-- Card Divs -->
     </section>
     <section class="bottom">
         <div class="list-btn-container">
@@ -36,6 +35,5 @@
             </ul>
         </div>
     </section>
-    <script src="index.js"></script>
 </body>
 </html>
