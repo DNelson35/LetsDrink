@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // grab elements
+
+
     const cardContainer = document.querySelector('.middle')
     const form = document.querySelector('form')
     const list = document.querySelector('.list-container')
- console.log(list)
 
     // helper functions
 
@@ -20,31 +21,34 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="addBtn">+</button>`
     }
 
+    function handleList(item){
+        const ul = document.createElement('ul')
+        ul.classList = 'recipe-list'
+        Object.keys(item).filter((value) => {
+            if(value.includes('strIngredient') && item[value] !== null){
+                const recipe = document.createElement('li')
+                recipe.classList = 'recipe'
+                recipe.textContent = item[value]
+                ul.appendChild(recipe)
+            }
+            list.appendChild(ul)
+        })
+    }
+
     function createCard(item){
         const cardDiv = document.createElement('div')
         buildCardHtml(cardDiv, item)
         cardContainer.appendChild(cardDiv)
         cardDiv.lastChild.addEventListener('click', (e) => {
-            const ul = document.createElement('ul')
-            ul.classList = 'recipe-list'
-            Object.keys(item).filter((value) => {
-                if(value.includes('strIngredient') && item[value] !== null){
-                    const recipe = document.createElement('li')
-                    recipe.classList = 'recipe'
-                    recipe.textContent = item[value]
-                    ul.appendChild(recipe)
-                }
-                list.appendChild(ul)
-            })
+            handleList(item)
         })
     }
     
-    function findCard(data,input){
-        data.drinks.filter((item) => {
-            if(input.toUpperCase() === item.strDrink.toUpperCase()){
-                createCard(item)
-            }
-        })
+    function findCard(data){
+        const item = data.drinks[0]
+        createCard(item)
+  
+        
     }
 
     function uppercaseFirstLetters(e, index){
@@ -58,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function fetchByName(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
         .then(resp => resp.json())
-        .then(resp => findCard(resp,name))
+        .then(resp => findCard(resp))
         .catch((error) => console.log(error.message))
     }
 
