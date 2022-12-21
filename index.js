@@ -25,8 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleList(item){
         const ul = document.createElement('ul')
         ul.classList = 'recipe-list'
+        const h2 = document.createElement('h2')
+        ul.appendChild(h2)
+        h2.textContent = `${item.strDrink} Ingredient List`
         Object.keys(item).filter((value) => {
             if(value.includes('strIngredient') && item[value] !== null){
+                h2.textContent = `${item.strDrink} Ingredient List`
                 const recipe = document.createElement('li')
                 recipe.classList = 'recipe'
                 recipe.textContent = item[value]
@@ -41,7 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         buildCardHtml(cardDiv, item)
         cardContainer.appendChild(cardDiv)
         cardDiv.lastChild.addEventListener('click', (e) => {
-            handleList(item)
+            if(selector.value !== 'Liquor'){
+                console.log(e.target)
+                handleList(item)
+            } else {
+                console.log(e.target)
+            }
+            
         })
     }
     
@@ -51,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showAllCards(data){
-        console.log(data)
         data.drinks.forEach((drink) => {
             createCard(drink)
         })
@@ -77,21 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
         .then(resp => resp.json())
         .then(resp => showCard(resp))
-        .catch(error = console.log(error))
+        .catch(error => console.log(error))
     }
 
     function fetchLiquorType(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`)
         .then(resp => resp.json())
         .then(resp => showAllCards(resp))
-        .catch(error = console.log('liquor error'))
+        .catch(error => console.log(error))
     }
 
     function fetchFirstLetter(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${name}`)
         .then(resp => resp.json())
         .then(resp => showAllCards(resp))
-        .catch(error = console.log('first error'))
+        .catch(error => console.log('first error'))
     }
 
     // call fetch request
@@ -106,13 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fetchLiquorType(input)
         }
         if(selector.value === 'First'){
-            console.log(selector.value)
             fetchFirstLetter(input)
         }
-        
 
-        form.reset()
-        
+        document.querySelector('#form-input').value = ''
     })
 
     
