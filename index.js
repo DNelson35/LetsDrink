@@ -93,14 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`)
         .then(resp => resp.json())
         .then(resp => showAllCards(resp))
-        .catch(error => console.log(error))
+        .catch(error => alert('Liquor Dosn\'t exits check spelling'))
     }
 
     function fetchFirstLetter(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${name}`)
         .then(resp => resp.json())
         .then(resp => showAllCards(resp))
-        .catch(error => console.log('first error'))
+        .catch(error => alert('typed more than one letter / or nothing found'))
     }
 
     // call fetch request
