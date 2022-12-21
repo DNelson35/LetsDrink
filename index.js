@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardContainer = document.querySelector('.middle')
     const form = document.querySelector('form')
     const list = document.querySelector('.list-container')
+    const selector = document.querySelector('#search')
 
     // helper functions
 
@@ -44,11 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
     
-    function findCard(data){
-        const item = data.drinks[0]
-        createCard(item)
-  
-        
+    function showCard(data){
+            const item = data.drinks[0]
+            createCard(item)
+    }
+
+    function showAllCards(data){
+        console.log(data)
+        data.drinks.forEach((drink) => {
+            createCard(drink)
+        })
+
     }
 
     function uppercaseFirstLetters(e, index){
@@ -62,8 +69,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function fetchByName(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
         .then(resp => resp.json())
-        .then(resp => findCard(resp))
-        .catch((error) => console.log(error.message))
+        .then(resp => showCard(resp))
+        .catch((error) => alert(`Word mispelled or dosnt exist on file `))
+    }
+
+    function fetchRandom(){
+        fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
+        .then(resp => resp.json())
+        .then(resp => showCard(resp))
+        .catch(error = console.log(error))
+    }
+
+    function fetchLiquorType(name){
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`)
+        .then(resp => resp.json())
+        .then(resp => showAllCards(resp))
+        .catch(error = console.log('liquor error'))
+    }
+
+    function fetchFirstLetter(name){
+        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${name}`)
+        .then(resp => resp.json())
+        .then(resp => showAllCards(resp))
+        .catch(error = console.log('first error'))
     }
 
     // call fetch request
@@ -71,7 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
     {
         e.preventDefault()
         const input = uppercaseFirstLetters(e, 0)
-        fetchByName(input)
+        if(selector.value === 'Name'){
+            fetchByName(input) 
+        }
+        if(selector.value === 'Liquor'){
+            fetchLiquorType(input)
+        }
+        if(selector.value === 'First'){
+            console.log(selector.value)
+            fetchFirstLetter(input)
+        }
+        
 
         form.reset()
         
