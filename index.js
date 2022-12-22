@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // helper functions
 
-    function buildCardHtml(card,item){
+    function buildCardHtml(card, item){
         card.classList = 'card'
         card.innerHTML = `  <img src=${item.strDrinkThumb} alt="Drink-Image" style="width:100%">
           <h4><b>${item.strDrink}</b></h4>
@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleList(item){
+        console.log(item)
         const ul = document.createElement('ul')
         ul.classList = 'recipe-list'
         const h2 = document.createElement('h2')
@@ -46,12 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
         cardContainer.appendChild(cardDiv)
         cardDiv.lastChild.addEventListener('click', (e) => {
             if(selector.value !== 'Liquor'){
-                console.log(e.target)
                 handleList(item)
             } else {
-                console.log(e.target)
+                fetchByName(item.strDrink, (resp) => {
+                    handleList(resp.drinks[0])
+                })
             }
             
+        })
+        cardDiv.querySelectorAll('li').forEach(li => {
+            if(li.textContent.includes('undefined')){
+                li.remove()
+            }
         })
     }
     
@@ -64,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         data.drinks.forEach((drink) => {
             createCard(drink)
         })
-
     }
 
     function uppercaseFirstLetters(e, index){
@@ -75,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // build fetch
-    function fetchByName(name){
+    function fetchByName(name, func){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
         .then(resp => resp.json())
-        .then(resp => showCard(resp))
+        .then(resp => func(resp))
         .catch((error) => alert(`Word mispelled or dosnt exist on file `))
     }
 
@@ -109,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault()
         const input = uppercaseFirstLetters(e, 0)
         if(selector.value === 'Name'){
-            fetchByName(input) 
+            fetchByName(input, showCard) 
         }
         if(selector.value === 'Liquor'){
             fetchLiquorType(input)
