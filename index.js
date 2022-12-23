@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buildCardHtml(card, item){
         card.classList = 'card'
-        card.innerHTML = `  <img src=${item.strDrinkThumb} alt="Drink-Image" style="width:100%">
+        card.innerHTML = `  <img loading="lazy" src=${item.strDrinkThumb} alt="Drink-Image" style="width:100%">
           <h4><b>${item.strDrink}</b></h4>
           <ul class="ing-list">
           <li><b>Glass:</b> ${item.strGlass}</li>
@@ -113,6 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => 
     {
         e.preventDefault()
+        while(cardContainer.firstChild){
+            cardContainer.firstChild.remove()
+        }
         const input = uppercaseFirstLetters(e, 0)
         if(selector.value === 'Name'){
             fetchByName(input, showCard) 
