@@ -8,7 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const list = document.querySelector('.list-container')
     const selector = document.querySelector('#search')
 
+
     // helper functions
+
 
     function buildCardHtml(card, item){
         card.classList = 'card'

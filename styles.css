@@ -1,28 +1,44 @@
+html{
+    width: 100%;
+    height: 100%;
+}
+
 body {
     background:#1E1E1E ;
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
+   margin: 0;
+   padding: 0;
 }
 
 header {
+    position: relative;
     margin: 0;
-    padding: 0;
-    text-align: center;
-}
-nav {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+    padding: 0;    
+    width: 100%; 
     height: 20vh;
     background: linear-gradient(-175deg, blanchedalmond, blanchedalmond 50%,#1E1E1E calc(50% + 1px), #1E1E1E 100% );
 }
 
+#input-btn:hover, .addBtn:hover{
+    background-color: rgb(123, 89, 29);
+}
+#input-btn:active{
+    transform: scale(0.78);
+    /* Scaling button to 0.98 to its original size */
+    box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+    /* Lowering the shadow */
+}
+
+.addBtn:active{
+    transform: scale(1.01);
+    
+}
+
 h1 {
-    position: relative;
-    font-size: 50px;
-    top: 12px;
-    left: 200px;
+    position: absolute;
+    overflow: hidden;
+    top: 19.5%;
+    left: calc(50% - 299.92px / 2);
+    font-size: 60px;
     margin: 0;
     padding: 0;
     rotate: 5deg;
@@ -38,12 +54,36 @@ ul{
 }
 
 .top {
-    display: flex;
-    justify-content: center;
+    display: inline;
+    text-align: center;
     height: 10vh;
     align-items: center;
 }
 
+p{
+    margin-top: 3vh;
+    margin-bottom: 0;
+    color: white;
+    font-size: larger;
+}
+
+form{
+    margin-top: 20vh;
+}
+label{
+    display: block;
+    color: white;
+    font-size: xx-large;
+    margin-bottom: 3vh;
+}
+#form-input{
+    height: 30px;
+    width: 200px;
+
+}
+#search{
+    height: 36px;
+}
 #input-btn {
     border:none;
     border-radius: 50%;
@@ -56,6 +96,8 @@ ul{
 .middle{
     height: auto;
     width: 100%;
+    padding: 0;
+    margin-top: 12vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -86,14 +128,14 @@ img{
 
 .bottom {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 12vh;
 }
 
 .recipe-list{
     height: 100px;
-    width: 95%;
-    background-color: white;
-    padding:10px;
+    width: 50%;
+    background-color: blanchedalmond;
+    padding:0;
     text-align: left;
     margin:10px;
     
