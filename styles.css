@@ -23,9 +23,8 @@ header {
 }
 #input-btn:active{
     transform: scale(0.78);
-    /* Scaling button to 0.98 to its original size */
     box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
-    /* Lowering the shadow */
+    
 }
 
 .addBtn:active{
@@ -36,7 +35,7 @@ header {
 h1 {
     position: absolute;
     overflow: hidden;
-    top: 19.5%;
+    top: calc(50% - 105.45px / 2);
     left: calc(50% - 299.92px / 2);
     font-size: 60px;
     margin: 0;
@@ -46,11 +45,16 @@ h1 {
 
 h4{
     margin: 3px;
+    background-color: blanchedalmond;
+    margin: 0;
+    text-align: center;
 }
 
 ul{
     margin: 0;
     padding-left:9%;
+    font-size: small;
+    background-color: blanchedalmond;
 }
 
 .top {
@@ -136,6 +140,7 @@ img{
     width: 50%;
     background-color: blanchedalmond;
     padding:0;
+    padding-left: 2%;
     text-align: left;
     margin:10px;
     
