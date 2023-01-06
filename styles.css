@@ -95,6 +95,7 @@ label{
     width: 2em;
     margin-left: 1em;
     background-color: orange;
+    font-size: larger;
 }
 
 .middle{
@@ -113,7 +114,8 @@ label{
     margin:10px;
     height: 300px;
     width:200px;
-    background-color: white; 
+    background-color: #1E1E1E; 
+    
 }
 
 .addBtn{
