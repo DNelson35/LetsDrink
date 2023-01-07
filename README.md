@@ -23,6 +23,6 @@ When the user selects a category the category is attached to the fetch request. 
 
 When the user performs a search on submit javascript will check if the card container already contains cards. If it does then the cards will be removed before displaying the newly searched item. This is to remove clutter on the page between searches. This will not remove the label elements. The label elements with the list of ingredients will remain until the user refreshes the page.
 
-For a more in-depth description of how this application works look click [here](functionNotes.md). These are the function notes and will provide a better understanding of what each function is doing.
+For a more in-depth description of how this application works click [here](functionNotes.md). These are the function notes and will provide a better understanding of what each function is doing.
 
 
