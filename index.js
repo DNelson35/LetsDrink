@@ -1,44 +1,37 @@
-// first eventListener 
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // grab elements 
 
     const cardContainer = document.querySelector('.middle')
     const form = document.querySelector('form')
     const list = document.querySelector('.list-container')
     const selector = document.querySelector('#search')
 
-    // Second eventListener
-
     form.addEventListener('submit', (e) => 
     {
-        e.preventDefault() // stop its defult of subiting the form data to a url.
-        const input = uppercaseFirstLetters(e, 0) // found in helper functions line 62
+        e.preventDefault() 
+        
+        const input = uppercaseFirstLetters(e, 0) 
 
         while(cardContainer.firstChild){
-            cardContainer.firstChild.remove() // to clear cards from previous search
+            cardContainer.firstChild.remove() 
         }
         switch(selector.value){
             case 'Name':
-                fetchByName(input, showCard) // line 38
+                fetchByName(input, showCard) 
                 break;
             case 'Liquor':
-                fetchLiquorType(input) // line 46
+                fetchLiquorType(input) 
                 break;
             case 'First':
-                fetchFirstLetter(input) // line 53
+                fetchFirstLetter(input) 
                 break;
         }
-        document.querySelector('#form-input').value = '' // used to clear only the user input and not the selctor value
+        document.querySelector('#form-input').value = ''
     })
-
-    // fetch functions used in the the form event listener
 
     function fetchByName(name, func){ 
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`)
         .then(resp => resp.json())
-        .then(resp => func(resp)) // to switch between two diffrent functions
+        .then(resp => func(resp)) 
         .catch((error) => alert(`Word mispelled or dosnt exist on file `))
     }
 
@@ -46,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function fetchLiquorType(name){
         fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${name}`)
         .then(resp => resp.json())
-        .then(resp => showAllCards(resp)) // ShowAllCards can be found on line 73
+        .then(resp => showAllCards(resp)) 
         .catch(error => alert('Liquor Dosn\'t exits check spelling'))
     }
 
@@ -57,9 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => alert('typed more than one letter / or nothing found'))
     }
 
-    // Fetch helper functions
 
-    function uppercaseFirstLetters(e, index){ // to upper case one or more words first letter
+    function uppercaseFirstLetters(e, index){ 
         return e.target[`${index}`].value.split(' ').map(el => {
             return el.charAt(0).toUpperCase() + el.slice(1)
         }).join(' ')
@@ -67,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showCard(data){
         const item = data.drinks[0]
-        createCard(item) //line 81
+        createCard(item) 
     }
 
     function showAllCards(data){
@@ -76,19 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    // helper function for showCard functions
-
     function createCard(item){
         const cardDiv = document.createElement('div')
-        buildCardHtml(cardDiv, item) // line 93
+        buildCardHtml(cardDiv, item) 
         cardContainer.appendChild(cardDiv)
-        // split into multiple function, speration of concerns
-        cardClickEvent(cardDiv,item) // line 105
-        handleMouseEvent(cardDiv) // line 118
-        removeUndifined(cardDiv)  // line 127
+        cardClickEvent(cardDiv,item)
+        handleMouseEvent(cardDiv) 
+        removeUndifined(cardDiv)  
     }
-
-    // createCard Helper functions
 
     function buildCardHtml(card, item){
         card.classList = 'card'
@@ -105,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function cardClickEvent (card, item){
         card.lastChild.addEventListener('click', (e) => {
             if(selector.value !== 'Liquor'){
-                handleList(item) // line 137
+                handleList(item) 
             } else {
                 fetchByName(item.strDrink, (resp) => {
                     handleList(resp.drinks[0])
@@ -132,9 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    // helper function for cardClickEvent
-
-    function handleList(item){ // the item will be the drink form the show card functions
+    function handleList(item){ 
         const ul = document.createElement('ul')
         ul.classList = 'recipe-list'
         const h2 = document.createElement('h2')
