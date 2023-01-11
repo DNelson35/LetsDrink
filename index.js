@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => 
     {
         e.preventDefault() 
-        
         const input = uppercaseFirstLetters(e, 0) 
 
         while(cardContainer.firstChild){
@@ -74,7 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cardContainer.appendChild(cardDiv)
         cardClickEvent(cardDiv,item)
         handleMouseEvent(cardDiv) 
-        removeUndifined(cardDiv)  
+        if(selector.value === 'Liquor'){
+            removeUndifined(cardDiv)  
+        }
+        
     }
 
     function buildCardHtml(card, item){
@@ -125,11 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const h2 = document.createElement('h2')
         ul.appendChild(h2)
         h2.textContent = `${item.strDrink} Ingredient List`
-        Object.keys(item).filter((value) => { 
-            if(value.includes('strIngredient') && item[value] !== null){
+        Object.keys(item).filter((key) => { 
+            if(key.includes('strIngredient') && item[key] !== null){
                 const recipe = document.createElement('li')
                 recipe.classList = 'recipe'
-                recipe.textContent = item[value]
+                recipe.textContent = item[key]
                 ul.appendChild(recipe)
             }
             list.appendChild(ul)
